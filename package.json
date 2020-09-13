@@ -1,0 +1,19 @@
+{
+  "name": "apex-legends-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuzumi/apex-legends-tracker.git"
+  },
+  "author": "Bogdan Morozyuk <bogdan7morozyuk@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuzumi/apex-legends-tracker/issues"
+  },
+  "homepage": "https://github.com/yuzumi/apex-legends-tracker#readme"
+}
