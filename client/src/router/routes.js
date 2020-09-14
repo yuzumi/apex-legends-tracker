@@ -1,7 +1,13 @@
 export default [
   {
     path: '/',
-    name: 'Home',
-    component: () => import('@/views/Home.vue'),
+    name: 'search',
+    component: () => import('@/views/Search.vue'),
+  },
+  {
+    path: '/profile/:platform/:gamertag',
+    name: 'profile',
+    props: true,
+    component: () => import('@/views/Profile.vue'),
   },
 ];
