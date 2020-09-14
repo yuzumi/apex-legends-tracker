@@ -1,29 +1,40 @@
 <template>
-  <section class="profile">
-    <div v-if="isLoading">
-      Loading...
-    </div>
-    <div v-else-if="error">
-      <p>{{ error.message }}</p>
-      <RouterLink to="/">Go back</RouterLink>
-    </div>
-    <div class="container" v-else>
-      <ProfileStats :profile="data" />
-      <RouterLink to="/">Go back</RouterLink>
-    </div>
-  </section>
+  <ProfileStatsProvider
+    :platform="platform"
+    :gamertag="gamertag"
+    :service="service"
+    v-slot="{ data, error, isLoading }"
+  >
+    <section class="profile">
+      <div v-if="isLoading">
+        Loading...
+      </div>
+      <div v-else-if="error">
+        <p>{{ error.message }}</p>
+        <RouterLink to="/">Go back</RouterLink>
+      </div>
+      <div class="container" v-else>
+        <ProfileStats :profile="data" />
+        <RouterLink to="/">Go back</RouterLink>
+      </div>
+    </section>
+  </ProfileStatsProvider>
 </template>
 
 <script>
-import axios from 'axios';
+import HttpClient from '@/services/HttpClient';
+import ProfileStatsService from '@/services/ProfileStatsService';
+
 import ProfileStats from '@/components/ProfileStats.vue';
+import ProfileStatsProvider from '@/providers/ProfileStatsProvider.vue';
+
+const httpClient = new HttpClient({ baseURL: '/api/v1' });
+const profileStatsService = new ProfileStatsService(httpClient, '/profile');
 
 export default {
   name: 'Profile',
   data: () => ({
-    data: {},
-    error: null,
-    isLoading: false,
+    service: profileStatsService,
   }),
   props: {
     platform: {
@@ -35,36 +46,12 @@ export default {
       required: true,
     },
   },
-  computed: {
-    apiUrl() {
-      return `/api/v1/profile/${this.platform}/${this.gamertag}`;
-    },
-  },
-  methods: {
-    async loadStats() {
-      this.isLoading = true;
-
-      try {
-        const response = await axios.get(this.apiUrl);
-
-        this.data = response.data.data;
-        this.error = null;
-      } catch (error) {
-        this.data = {};
-        this.error = error.response.data;
-      } finally {
-        this.isLoading = false;
-      }
-    },
-  },
   beforeCreate() {
     document.body.classList.remove('body-bg-image');
   },
-  async created() {
-    await this.loadStats();
-  },
   components: {
     ProfileStats,
+    ProfileStatsProvider,
   },
 };
 </script>
