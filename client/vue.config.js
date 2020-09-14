@@ -7,4 +7,11 @@ module.exports = {
         return args;
       });
   },
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: 'http://localhost:5000'
+      }
+    }
+  }
 };
