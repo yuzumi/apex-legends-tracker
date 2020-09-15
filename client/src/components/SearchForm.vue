@@ -1,23 +1,23 @@
 <template>
   <form class="search-form" @submit.prevent="handleSubmit">
     <div class="form-group">
-      <label for="platform">
-        Platform
-      </label>
+      <label for="platform">Platform</label>
       <select name="platform" id="platform" v-model="platform">
-        <option value="psn">Playstation</option>
-        <option value="xbl">Xbox</option>
-        <option value="Origin">Origin</option>
+        <option
+          v-for="{ label, value } of platformOptions"
+          :key="value"
+          :value="value"
+        >
+          {{ label }}
+        </option>
       </select>
     </div>
     <div class="form-group">
-      <label for="gamertag">
-        Gamertag
-      </label>
+      <label for="gamertag">Gamertag</label>
       <input type="text" name="gamertag" id="gamertag" v-model.trim="gamertag" />
     </div>
     <div class="form-group">
-      <input type="submit" value="Submit" class="btn btn-submit">
+      <input type="submit" value="Submit" class="btn btn-submit" />
     </div>
   </form>
 </template>
@@ -28,6 +28,11 @@ export default {
   data: () => ({
     platform: 'psn',
     gamertag: '',
+    platformOptions: [
+      { label: 'Playstation', value: 'psn' },
+      { label: 'Xbox', value: 'xbl' },
+      { label: 'Origin', value: 'Origin' },
+    ],
   }),
   methods: {
     handleSubmit() {
