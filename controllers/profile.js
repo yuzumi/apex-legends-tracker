@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const ServerError = require('../errors/server-error');
 const ProfileNotFoundError = require('../errors/profile-not-found-error');
+const HTTPResponseStatusCodes = require('../constants/http-response-status-codes');
 
 const { TRACKER_API_KEY, TRACKER_API_URL } = require('../config');
 
@@ -17,13 +18,13 @@ class ProfileController {
       const data = await response.json();
   
       data.errors
-        ? res.status(404).json(new ProfileNotFoundError())
+        ? res.status(HTTPResponseStatusCodes.NotFound).json(new ProfileNotFoundError())
         : res.json(data);
         
     } catch (error) {
       console.error(error);
   
-      res.status(500).json(new ServerError());
+      res.status(HTTPResponseStatusCodes.InternalServerError).json(new ServerError());
     }
   }
 }
