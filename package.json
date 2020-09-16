@@ -1,7 +1,7 @@
 {
   "name": "apex-legends-tracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Full stack Vue/Express app using the Tracker Network API to track player stats",
   "main": "server.js",
   "scripts": {
     "start": "node server",
